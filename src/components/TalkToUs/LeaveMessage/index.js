@@ -61,7 +61,7 @@ const Callback = ({ onSubmit }) => {
   if (newForm) {
     return (
       <div
-        class="hs-form-frame"
+        className="hs-form-frame"
         data-region="na2"
         data-form-id="1c7c4ef7-bd37-4cfa-8e88-a0f62f51a895"
         data-portal-id="20168923"
