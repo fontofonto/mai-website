@@ -12,7 +12,10 @@ module.exports = {
       resolve: "gatsby-plugin-robots-txt",
       options: {
         host: siteUrl,
-        sitemap: `${siteUrl}/sitemap.xml`,
+        sitemap: [
+          `${siteUrl}/sitemap.xml`,
+          "https://blog.measurable.ai/sitemap.xml",
+        ],
         policy: [{ userAgent: "*", allow: "/" }],
       },
     },
@@ -26,18 +29,16 @@ module.exports = {
               path
             }
           }
-          allWordpressPost {
-            edges {
-              node {
-                link
-                modified
-              }
-            }
-          }
         }
       `,
         resolveSiteUrl: () => siteUrl,
         exclude: ["/en-US", "/en-US/**", "/termsOfUse", "/privacyPolicy"],
+        serialize: ({ allSitePage }) =>
+          allSitePage.nodes.map(node => ({
+            url: `${siteUrl}${node.path}`,
+            changefreq: node.path === "/" ? "daily" : "weekly",
+            priority: node.path === "/" ? 1.0 : 0.7,
+          })),
       },
     },
     {
